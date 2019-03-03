@@ -37,9 +37,15 @@
                      
 
 
+<<<<<<< HEAD
           <div class="wrap-input100 validate-input" data-validate="nombre_usuario is required">
             <span class="label-input100">Usuario</span>
             <input class="input100" type="text" name="nombre_usuario" placeholder="nombre_usuario...">
+=======
+          <div class="wrap-input100 validate-input" data-validate="Username is required">
+            <span class="label-input100">Usuario</span>
+            <input class="input100" type="text" name="username" placeholder="Username...">
+>>>>>>> origin/master
             <span class="focus-input100"></span>
           </div>
 

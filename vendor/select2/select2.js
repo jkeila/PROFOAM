@@ -3481,8 +3481,13 @@ S2.define('select2/data/ajax',[
         callback(results);
       }, function () {
         // Attempt to detect if a request was aborted
+<<<<<<< HEAD
         // Only works if the transport exposes a estado property
         if ($request.estado && $request.estado === '0') {
+=======
+        // Only works if the transport exposes a status property
+        if ($request.status && $request.status === '0') {
+>>>>>>> origin/master
           return;
         }
 

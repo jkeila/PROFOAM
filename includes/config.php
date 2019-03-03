@@ -15,6 +15,10 @@
   define( 'DB_HOST', 'localhost' );          // Set database host
   define( 'DB_USER', 'josue' );             // Set database user
   define( 'DB_PASS', 'legolas13' );             // Set database password
+<<<<<<< HEAD
   define( 'DB_NAME', 'db_prohfoam' );        // Set database name
+=======
+  define( 'DB_NAME', 'oswa_inv' );        // Set database name
+>>>>>>> origin/master
 
 ?>
