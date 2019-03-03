@@ -48,7 +48,7 @@
       </div>
       <div class="panel-body">
         <div class="col-md-6">
-          <form method="post" action="add_user.php">
+          <form method="post" action="agregar_usuario.php">
             <div class="form-group">
                 <label for="name">Nombre</label>
                 <input type="text" class="form-control" name="full-name" placeholder="Nombre completo">
@@ -80,9 +80,9 @@
     </div>
   </div>
 <?php
-  if($_SERVER['add_user']=='POST')
+  if(isset($_SERVER['add_user']))
   {
-      function validar_nombre(string $full-name): bool 
+      function validar_nombre(string $fullname): bool 
       {
           return !(trim($full-name)=='');
       }

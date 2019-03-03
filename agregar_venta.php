@@ -65,7 +65,7 @@
        </strong>
       </div>
       <div class="panel-body">
-        <form method="post" action="add_sale.php">
+        <form method="post" action="agregar_venta.php">
          <table class="table table-bordered">
            <thead>
             <th> Producto </th>
