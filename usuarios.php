@@ -6,7 +6,7 @@
 // Checkin What level user has permission to view this page
  page_require_level(1);
 //pull out all user form database
- $all_users = find_all_user();
+ $all_usuarios = find_all_user();
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -38,20 +38,20 @@
           </tr>
         </thead>
         <tbody>
-        <?php foreach($all_users as $a_user): ?>
+        <?php foreach($all_usuarios as $a_user): ?>
           <tr>
            <td class="text-center"><?php echo count_id();?></td>
            <td><?php echo remove_junk(ucwords($a_user['name']))?></td>
-           <td><?php echo remove_junk(ucwords($a_user['username']))?></td>
-           <td class="text-center"><?php echo remove_junk(ucwords($a_user['group_name']))?></td>
+           <td><?php echo remove_junk(ucwords($a_user['nombre_usuario']))?></td>
+           <td class="text-center"><?php echo remove_junk(ucwords($a_user['nombre_grupo']))?></td>
            <td class="text-center">
-           <?php if($a_user['status'] === '1'): ?>
+           <?php if($a_user['estado'] === '1'): ?>
             <span class="label label-success"><?php echo "Activo"; ?></span>
           <?php else: ?>
             <span class="label label-danger"><?php echo "Inactivo"; ?></span>
           <?php endif;?>
            </td>
-           <td><?php echo read_date($a_user['last_login'])?></td>
+           <td><?php echo read_date($a_user['ultimo_acceso'])?></td>
            <td class="text-center">
              <div class="btn-group">
                 <a href="editar_usuario.php?id=<?php echo (int)$a_user['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">

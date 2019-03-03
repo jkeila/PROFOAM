@@ -20,12 +20,12 @@
    if(empty($errors)){
            $name = remove_junk($db->escape($_POST['group-name']));
           $level = remove_junk($db->escape($_POST['group-level']));
-         $status = remove_junk($db->escape($_POST['status']));
+         $estado = remove_junk($db->escape($_POST['estado']));
 
-        $query  = "INSERT INTO user_groups (";
-        $query .="group_name,group_level,group_status";
+        $query  = "INSERT INTO grupo_usuario (";
+        $query .="nombre_grupo,nivel_grupo,estado_grupo";
         $query .=") VALUES (";
-        $query .=" '{$name}', '{$level}','{$status}'";
+        $query .=" '{$name}', '{$level}','{$estado}'";
         $query .=")";
         if($db->query($query)){
           //sucess
@@ -58,8 +58,8 @@
               <input type="number" class="form-control" name="group-level">
         </div>
         <div class="form-group">
-          <label for="status">Estado</label>
-            <select class="form-control" name="status">
+          <label for="estado">Estado</label>
+            <select class="form-control" name="estado">
               <option value="1">Activo</option>
               <option value="0">Inactivo</option>
             </select>

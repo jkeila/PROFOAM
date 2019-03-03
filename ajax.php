@@ -8,9 +8,9 @@
     $html = '';
    if(isset($_POST['product_name']) && strlen($_POST['product_name']))
    {
-     $products = find_product_by_title($_POST['product_name']);
-     if($products){
-        foreach ($products as $product):
+     $productos = find_product_by_title($_POST['product_name']);
+     if($productos){
+        foreach ($productos as $product):
            $html .= "<li class=\"list-group-item\">";
            $html .= $product['name'];
            $html .= "</li>";
@@ -39,13 +39,13 @@
           $html .= "<td id=\"s_name\">".$result['name']."</td>";
           $html .= "<input type=\"hidden\" name=\"s_id\" value=\"{$result['id']}\">";
           $html  .= "<td>";
-          $html  .= "<input type=\"text\" class=\"form-control\" name=\"price\" value=\"{$result['sale_price']}\">";
+          $html  .= "<input type=\"text\" class=\"form-control\" name=\"precio\" value=\"{$result['precio_venta']}\">";
           $html  .= "</td>";
-          $html .= "<td id=\"s_qty\">";
-          $html .= "<input type=\"text\" class=\"form-control\" name=\"quantity\" value=\"1\">";
+          $html .= "<td id=\"s_cant\">";
+          $html .= "<input type=\"text\" class=\"form-control\" name=\"cantidad\" value=\"1\">";
           $html  .= "</td>";
           $html  .= "<td>";
-          $html  .= "<input type=\"text\" class=\"form-control\" name=\"total\" value=\"{$result['sale_price']}\">";
+          $html  .= "<input type=\"text\" class=\"form-control\" name=\"total\" value=\"{$result['precio_venta']}\">";
           $html  .= "</td>";
           $html  .= "<td>";
           $html  .= "<input type=\"date\" class=\"form-control datePicker\" name=\"date\" data-date data-date-format=\"yyyy-mm-dd\">";

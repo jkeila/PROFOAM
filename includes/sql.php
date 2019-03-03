@@ -81,11 +81,11 @@ function tableExists($table){
  /* Login with the data provided in $_POST,
  /* coming from the login form.
 /*--------------------------------------------------------------*/
-  function authenticate($username='', $password='') {
+  function authenticate($nombre_usuario='', $password='') {
     global $db;
-    $username = $db->escape($username);
+    $nombre_usuario = $db->escape($nombre_usuario);
     $password = $db->escape($password);
-    $sql  = sprintf("SELECT id,username,password,user_level FROM users WHERE username ='%s' LIMIT 1", $username);
+    $sql  = sprintf("SELECT id,nombre_usuario,password,nivel_usuario FROM usuarios WHERE nombre_usuario ='%s' LIMIT 1", $nombre_usuario);
     $result = $db->query($sql);
     if($db->num_rows($result)){
       $user = $db->fetch_assoc($result);
@@ -101,11 +101,11 @@ function tableExists($table){
   /* coming from the login_v2.php form.
   /* If you used this method then remove authenticate function.
  /*--------------------------------------------------------------*/
-   function authenticate_v2($username='', $password='') {
+   function authenticate_v2($nombre_usuario='', $password='') {
      global $db;
-     $username = $db->escape($username);
+     $nombre_usuario = $db->escape($nombre_usuario);
      $password = $db->escape($password);
-     $sql  = sprintf("SELECT id,username,password,user_level FROM users WHERE username ='%s' LIMIT 1", $username);
+     $sql  = sprintf("SELECT id,nombre_usuario,password,nivel_usuario FROM usuarios WHERE nombre_usuario ='%s' LIMIT 1", $nombre_usuario);
      $result = $db->query($sql);
      if($db->num_rows($result)){
        $user = $db->fetch_assoc($result);
@@ -127,23 +127,23 @@ function tableExists($table){
       if(!$current_user){
          if(isset($_SESSION['user_id'])):
              $user_id = intval($_SESSION['user_id']);
-             $current_user = find_by_id('users',$user_id);
+             $current_user = find_by_id('usuarios',$user_id);
         endif;
       }
     return $current_user;
   }
   /*--------------------------------------------------------------*/
   /* Find all user by
-  /* Joining users table and user gropus table
+  /* Joining usuarios table and user gropus table
   /*--------------------------------------------------------------*/
   function find_all_user(){
       global $db;
       $results = array();
-      $sql = "SELECT u.id,u.name,u.username,u.user_level,u.status,u.last_login,";
-      $sql .="g.group_name ";
-      $sql .="FROM users u ";
-      $sql .="LEFT JOIN user_groups g ";
-      $sql .="ON g.group_level=u.user_level ORDER BY u.name ASC";
+      $sql = "SELECT u.id,u.name,u.nombre_usuario,u.nivel_usuario,u.estado,u.ultimo_acceso,";
+      $sql .="g.nombre_grupo ";
+      $sql .="FROM usuarios u ";
+      $sql .="LEFT JOIN grupo_usuario g ";
+      $sql .="ON g.nivel_grupo=u.nivel_usuario ORDER BY u.name ASC";
       $result = find_by_sql($sql);
       return $result;
   }
@@ -155,7 +155,7 @@ function tableExists($table){
 	{
 		global $db;
     $date = make_date();
-    $sql = "UPDATE users SET last_login='{$date}' WHERE id ='{$user_id}' LIMIT 1";
+    $sql = "UPDATE usuarios SET ultimo_acceso='{$date}' WHERE id ='{$user_id}' LIMIT 1";
     $result = $db->query($sql);
     return ($result && $db->affected_rows() === 1 ? true : false);
 	}
@@ -166,7 +166,7 @@ function tableExists($table){
   function find_by_groupName($val)
   {
     global $db;
-    $sql = "SELECT group_name FROM user_groups WHERE group_name = '{$db->escape($val)}' LIMIT 1 ";
+    $sql = "SELECT nombre_grupo FROM grupo_usuario WHERE nombre_grupo = '{$db->escape($val)}' LIMIT 1 ";
     $result = $db->query($sql);
     return($db->num_rows($result) === 0 ? true : false);
   }
@@ -176,7 +176,7 @@ function tableExists($table){
   function find_by_groupLevel($level)
   {
     global $db;
-    $sql = "SELECT group_level FROM user_groups WHERE group_level = '{$db->escape($level)}' LIMIT 1 ";
+    $sql = "SELECT nivel_grupo FROM grupo_usuario WHERE nivel_grupo = '{$db->escape($level)}' LIMIT 1 ";
     $result = $db->query($sql);
     return($db->num_rows($result) === 0 ? true : false);
   }
@@ -186,17 +186,17 @@ function tableExists($table){
    function page_require_level($require_level){
      global $session;
      $current_user = current_user();
-     $login_level = find_by_groupLevel($current_user['user_level']);
+     $login_level = find_by_groupLevel($current_user['nivel_usuario']);
      //if user not login
      if (!$session->isUserLoggedIn(true)):
             $session->msg('d','Por favor Iniciar sesión...');
             redirect('index.php', false);
-      //if Group status Deactive
-     elseif($login_level['group_status'] === '0'):
+      //if Group estado Deactive
+     elseif($login_level['estado_grupo'] === '0'):
            $session->msg('d','Este nivel de usaurio esta inactivo!');
            redirect('home.php',false);
       //cheackin log in User level and Require level is Less than or equal to
-     elseif($current_user['user_level'] <= (int)$require_level):
+     elseif($current_user['nivel_usuario'] <= (int)$require_level):
               return true;
       else:
             $session->msg("d", "¡Lo siento!  no tienes permiso para ver la página.");
@@ -210,10 +210,10 @@ function tableExists($table){
    /*--------------------------------------------------------------*/
   function join_product_table(){
      global $db;
-     $sql  =" SELECT p.id,p.name,p.quantity,p.buy_price,p.sale_price,p.media_id,p.date,c.name";
+     $sql  =" SELECT p.id,p.name,p.cantidad,p.precio_compra,p.precio_venta,p.media_id,p.date,c.name";
     $sql  .=" AS categorie,m.file_name AS image";
-    $sql  .=" FROM products p";
-    $sql  .=" LEFT JOIN categories c ON c.id = p.categorie_id";
+    $sql  .=" FROM productos p";
+    $sql  .=" LEFT JOIN categorias c ON c.id = p.categoria_id";
     $sql  .=" LEFT JOIN media m ON m.id = p.media_id";
     $sql  .=" ORDER BY p.id ASC";
     return find_by_sql($sql);
@@ -227,7 +227,7 @@ function tableExists($table){
    function find_product_by_title($product_name){
      global $db;
      $p_name = remove_junk($db->escape($product_name));
-     $sql = "SELECT name FROM products WHERE name like '%$p_name%' LIMIT 5";
+     $sql = "SELECT name FROM productos WHERE name like '%$p_name%' LIMIT 5";
      $result = find_by_sql($sql);
      return $result;
    }
@@ -238,20 +238,20 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
   function find_all_product_info_by_title($title){
     global $db;
-    $sql  = "SELECT * FROM products ";
+    $sql  = "SELECT * FROM productos ";
     $sql .= " WHERE name ='{$title}'";
     $sql .=" LIMIT 1";
     return find_by_sql($sql);
   }
 
   /*--------------------------------------------------------------*/
-  /* Function for Update product quantity
+  /* Function for Update product cantidad
   /*--------------------------------------------------------------*/
-  function update_product_qty($qty,$p_id){
+  function update_product_cant($cant,$p_id){
     global $db;
-    $qty = (int) $qty;
+    $cant = (int) $cant;
     $id  = (int)$p_id;
-    $sql = "UPDATE products SET quantity=quantity -'{$qty}' WHERE id = '{$id}'";
+    $sql = "UPDATE productos SET cantidad=cantidad -'{$cant}' WHERE id = '{$id}'";
     $result = $db->query($sql);
     return($db->affected_rows() === 1 ? true : false);
 
@@ -261,9 +261,9 @@ function tableExists($table){
   /*--------------------------------------------------------------*/
  function find_recent_product_added($limit){
    global $db;
-   $sql   = " SELECT p.id,p.name,p.sale_price,p.media_id,c.name AS categorie,";
-   $sql  .= "m.file_name AS image FROM products p";
-   $sql  .= " LEFT JOIN categories c ON c.id = p.categorie_id";
+   $sql   = " SELECT p.id,p.name,p.precio_venta,p.media_id,c.name AS categorie,";
+   $sql  .= "m.file_name AS image FROM productos p";
+   $sql  .= " LEFT JOIN categorias c ON c.id = p.categoria_id";
    $sql  .= " LEFT JOIN media m ON m.id = p.media_id";
    $sql  .= " ORDER BY p.id DESC LIMIT ".$db->escape((int)$limit);
    return find_by_sql($sql);
@@ -273,21 +273,21 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
  function find_higest_saleing_product($limit){
    global $db;
-   $sql  = "SELECT p.name, COUNT(s.product_id) AS totalSold, SUM(s.qty) AS totalQty";
-   $sql .= " FROM sales s";
-   $sql .= " LEFT JOIN products p ON p.id = s.product_id ";
-   $sql .= " GROUP BY s.product_id";
-   $sql .= " ORDER BY SUM(s.qty) DESC LIMIT ".$db->escape((int)$limit);
+   $sql  = "SELECT p.name, COUNT(s.producto_id) AS totalSold, SUM(s.cant) AS totalcant";
+   $sql .= " FROM ventas s";
+   $sql .= " LEFT JOIN productos p ON p.id = s.producto_id ";
+   $sql .= " GROUP BY s.producto_id";
+   $sql .= " ORDER BY SUM(s.cant) DESC LIMIT ".$db->escape((int)$limit);
    return $db->query($sql);
  }
  /*--------------------------------------------------------------*/
- /* Function for find all sales
+ /* Function for find all ventas
  /*--------------------------------------------------------------*/
  function find_all_sale(){
    global $db;
-   $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
-   $sql .= " FROM sales s";
-   $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+   $sql  = "SELECT s.id,s.cant,s.precio,s.date,p.name";
+   $sql .= " FROM ventas s";
+   $sql .= " LEFT JOIN productos p ON s.producto_id = p.id";
    $sql .= " ORDER BY s.date DESC";
    return find_by_sql($sql);
  }
@@ -296,57 +296,57 @@ function tableExists($table){
  /*--------------------------------------------------------------*/
 function find_recent_sale_added($limit){
   global $db;
-  $sql  = "SELECT s.id,s.qty,s.price,s.date,p.name";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+  $sql  = "SELECT s.id,s.cant,s.precio,s.date,p.name";
+  $sql .= " FROM ventas s";
+  $sql .= " LEFT JOIN productos p ON s.producto_id = p.id";
   $sql .= " ORDER BY s.date DESC LIMIT ".$db->escape((int)$limit);
   return find_by_sql($sql);
 }
 /*--------------------------------------------------------------*/
-/* Function for Generate sales report by two dates
+/* Function for Generate ventas report by two dates
 /*--------------------------------------------------------------*/
 function find_sale_by_dates($start_date,$end_date){
   global $db;
   $start_date  = date("Y-m-d", strtotime($start_date));
   $end_date    = date("Y-m-d", strtotime($end_date));
-  $sql  = "SELECT s.date, p.name,p.sale_price,p.buy_price,";
-  $sql .= "COUNT(s.product_id) AS total_records,";
-  $sql .= "SUM(s.qty) AS total_sales,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price,";
-  $sql .= "SUM(p.buy_price * s.qty) AS total_buying_price ";
-  $sql .= "FROM sales s ";
-  $sql .= "LEFT JOIN products p ON s.product_id = p.id";
+  $sql  = "SELECT s.date, p.name,p.precio_venta,p.precio_compra,";
+  $sql .= "COUNT(s.producto_id) AS total_records,";
+  $sql .= "SUM(s.cant) AS total_ventas,";
+  $sql .= "SUM(p.precio_venta * s.cant) AS total_saleing_precio,";
+  $sql .= "SUM(p.precio_compra * s.cant) AS total_buying_precio ";
+  $sql .= "FROM ventas s ";
+  $sql .= "LEFT JOIN productos p ON s.producto_id = p.id";
   $sql .= " WHERE s.date BETWEEN '{$start_date}' AND '{$end_date}'";
   $sql .= " GROUP BY DATE(s.date),p.name";
   $sql .= " ORDER BY DATE(s.date) DESC";
   return $db->query($sql);
 }
 /*--------------------------------------------------------------*/
-/* Function for Generate Daily sales report
+/* Function for Generate Daily ventas report
 /*--------------------------------------------------------------*/
-function  dailySales($year,$month){
+function  dailyventas($year,$month){
   global $db;
-  $sql  = "SELECT s.qty,";
+  $sql  = "SELECT s.cant,";
   $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+  $sql .= "SUM(p.precio_venta * s.cant) AS total_saleing_precio";
+  $sql .= " FROM ventas s";
+  $sql .= " LEFT JOIN productos p ON s.producto_id = p.id";
   $sql .= " WHERE DATE_FORMAT(s.date, '%Y-%m' ) = '{$year}-{$month}'";
-  $sql .= " GROUP BY DATE_FORMAT( s.date,  '%e' ),s.product_id";
+  $sql .= " GROUP BY DATE_FORMAT( s.date,  '%e' ),s.producto_id";
   return find_by_sql($sql);
 }
 /*--------------------------------------------------------------*/
-/* Function for Generate Monthly sales report
+/* Function for Generate Monthly ventas report
 /*--------------------------------------------------------------*/
-function  monthlySales($year){
+function  monthlyventas($year){
   global $db;
-  $sql  = "SELECT s.qty,";
+  $sql  = "SELECT s.cant,";
   $sql .= " DATE_FORMAT(s.date, '%Y-%m-%e') AS date,p.name,";
-  $sql .= "SUM(p.sale_price * s.qty) AS total_saleing_price";
-  $sql .= " FROM sales s";
-  $sql .= " LEFT JOIN products p ON s.product_id = p.id";
+  $sql .= "SUM(p.precio_venta * s.cant) AS total_saleing_precio";
+  $sql .= " FROM ventas s";
+  $sql .= " LEFT JOIN productos p ON s.producto_id = p.id";
   $sql .= " WHERE DATE_FORMAT(s.date, '%Y' ) = '{$year}'";
-  $sql .= " GROUP BY DATE_FORMAT( s.date,  '%c' ),s.product_id";
+  $sql .= " GROUP BY DATE_FORMAT( s.date,  '%c' ),s.producto_id";
   $sql .= " ORDER BY date_format(s.date, '%c' ) ASC";
   return find_by_sql($sql);
 }

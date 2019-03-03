@@ -3,29 +3,29 @@
   require_once('includes/cargar.php');
   // Checkin What level user has permission to view this page
   page_require_level(2);
-  $all_categories = find_all('categories');
+  $all_categorias = find_all('categorias');
   $all_photo = find_all('media');
 ?>
 <?php
  if(isset($_POST['agregar_producto'])){
-   $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price' );
+   $req_fields = array('product-title','product-categorie','product-cantidad','buying-precio', 'saleing-precio' );
    validate_fields($req_fields);
    if(empty($errors)){
      $p_name  = remove_junk($db->escape($_POST['product-title']));
      $p_cat   = remove_junk($db->escape($_POST['product-categorie']));
-     $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-     $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-     $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+     $p_cant   = remove_junk($db->escape($_POST['product-cantidad']));
+     $p_buy   = remove_junk($db->escape($_POST['buying-precio']));
+     $p_sale  = remove_junk($db->escape($_POST['saleing-precio']));
      if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
        $media_id = '0';
      } else {
        $media_id = remove_junk($db->escape($_POST['product-photo']));
      }
      $date    = make_date();
-     $query  = "INSERT INTO products (";
-     $query .=" name,quantity,buy_price,sale_price,categorie_id,media_id,date";
+     $query  = "INSERT INTO productos (";
+     $query .=" name,cantidad,precio_compra,precio_venta,categoria_id,media_id,date";
      $query .=") VALUES (";
-     $query .=" '{$p_name}', '{$p_qty}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}'";
+     $query .=" '{$p_name}', '{$p_cant}', '{$p_buy}', '{$p_sale}', '{$p_cat}', '{$media_id}', '{$date}'";
      $query .=")";
      $query .=" ON DUPLICATE KEY UPDATE name='{$p_name}'";
      if($db->query($query)){
@@ -75,7 +75,7 @@
                   <div class="col-md-6">
                     <select class="form-control" name="product-categorie">
                       <option value="">Selecciona una categoría</option>
-                    <?php  foreach ($all_categories as $cat): ?>
+                    <?php  foreach ($all_categorias as $cat): ?>
                       <option value="<?php echo (int)$cat['id'] ?>">
                         <?php echo $cat['name'] ?></option>
                     <?php endforeach; ?>
@@ -100,7 +100,7 @@
                      <span class="input-group-addon">
                       <i class="glyphicon glyphicon-shopping-cart"></i>
                      </span>
-                     <input type="number" class="form-control" name="product-quantity" placeholder="Cantidad">
+                     <input type="number" class="form-control" name="product-cantidad" placeholder="Cantidad">
                   </div>
                  </div>
                  <div class="col-md-4">
@@ -108,7 +108,7 @@
                      <span class="input-group-addon">
                        <i class="glyphicon glyphicon-usd"></i>
                      </span>
-                     <input type="number" class="form-control" name="buying-price" placeholder="Precio de compra">
+                     <input type="number" class="form-control" name="buying-precio" placeholder="Precio de compra">
                      <span class="input-group-addon">.00</span>
                   </div>
                  </div>
@@ -117,7 +117,7 @@
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="number" class="form-control" name="saleing-price" placeholder="Precio de venta">
+                      <input type="number" class="form-control" name="saleing-precio" placeholder="Precio de venta">
                       <span class="input-group-addon">.00</span>
                    </div>
                   </div>

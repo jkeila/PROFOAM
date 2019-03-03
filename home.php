@@ -1,7 +1,7 @@
 <?php
   $page_title = 'Home Page';
   require_once('includes/cargar.php');
-  if (!$session->isUserLoggedIn(true)) { redirect('index.php', false);}
+  if (!$session->isUserLoggedIn(true)) { redirect('login.php', false);}
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">

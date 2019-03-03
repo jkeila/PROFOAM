@@ -21,13 +21,13 @@
 <?php
  //update user other info
   if(isset($_POST['update'])){
-    $req_fields = array('name','username' );
+    $req_fields = array('name','nombre_usuario' );
     validate_fields($req_fields);
     if(empty($errors)){
              $id = (int)$_SESSION['user_id'];
            $name = remove_junk($db->escape($_POST['name']));
-       $username = remove_junk($db->escape($_POST['username']));
-            $sql = "UPDATE users SET name ='{$name}', username ='{$username}' WHERE id='{$id}'";
+       $nombre_usuario = remove_junk($db->escape($_POST['nombre_usuario']));
+            $sql = "UPDATE usuarios SET name ='{$name}', nombre_usuario ='{$nombre_usuario}' WHERE id='{$id}'";
     $result = $db->query($sql);
           if($result && $db->affected_rows() === 1){
             $session->msg('s',"Cuenta actualizada. ");
@@ -58,7 +58,7 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-4">
-                <img class="img-circle img-size-2" src="uploads/users/<?php echo $user['image'];?>" alt="">
+                <img class="img-circle img-size-2" src="uploads/usuarios/<?php echo $user['image'];?>" alt="">
             </div>
             <div class="col-md-8">
               <form class="form" action="editar_cuenta.php" method="POST" enctype="multipart/form-data">
@@ -88,8 +88,8 @@
                   <input type="name" class="form-control" name="name" value="<?php echo remove_junk(ucwords($user['name'])); ?>">
             </div>
             <div class="form-group">
-                  <label for="username" class="control-label">Usuario</label>
-                  <input type="text" class="form-control" name="username" value="<?php echo remove_junk(ucwords($user['username'])); ?>">
+                  <label for="nombre_usuario" class="control-label">Usuario</label>
+                  <input type="text" class="form-control" name="nombre_usuario" value="<?php echo remove_junk(ucwords($user['nombre_usuario'])); ?>">
             </div>
             <div class="form-group clearfix">
                     <a href="cambiar_contrasena.php" title="change password" class="btn btn-danger pull-right">Cambiar contraseña</a>

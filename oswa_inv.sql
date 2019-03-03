@@ -17,25 +17,25 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `oswa_inv`
+-- Base de datos: `db_prohfoam`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `categories`
+-- Estructura de tabla para la tabla `categorias`
 --
 
-CREATE TABLE `categories` (
+CREATE TABLE `categorias` (
   `id` int(11) NOT NULL,
   `name` varchar(60) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `categories`
+-- Volcado de datos para la tabla `categorias`
 --
 
-INSERT INTO `categories` (`id`, `name`) VALUES
+INSERT INTO `categorias` (`id`, `name`) VALUES
 (1, 'Repuestos');
 
 -- --------------------------------------------------------
@@ -60,44 +60,44 @@ INSERT INTO `media` (`id`, `file_name`, `file_type`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `products`
+-- Estructura de tabla para la tabla `productos`
 --
 
-CREATE TABLE `products` (
+CREATE TABLE `productos` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `quantity` varchar(50) DEFAULT NULL,
-  `buy_price` decimal(25,2) DEFAULT NULL,
-  `sale_price` decimal(25,2) NOT NULL,
-  `categorie_id` int(11) UNSIGNED NOT NULL,
+  `cantidad` varchar(50) DEFAULT NULL,
+  `precio_compra` decimal(25,2) DEFAULT NULL,
+  `precio_venta` decimal(25,2) NOT NULL,
+  `categoria_id` int(11) UNSIGNED NOT NULL,
   `media_id` int(11) DEFAULT '0',
   `date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `products`
+-- Volcado de datos para la tabla `productos`
 --
 
-INSERT INTO `products` (`id`, `name`, `quantity`, `buy_price`, `sale_price`, `categorie_id`, `media_id`, `date`) VALUES
+INSERT INTO `productos` (`id`, `name`, `cantidad`, `precio_compra`, `precio_venta`, `categoria_id`, `media_id`, `date`) VALUES
 (1, 'Filtro de gasolina', '100', '5.00', '10.00', 1, 1, '2017-06-16 07:03:16');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `sales`
+-- Estructura de tabla para la tabla `ventas`
 --
 
-CREATE TABLE `sales` (
+CREATE TABLE `ventas` (
   `id` int(11) UNSIGNED NOT NULL,
-  `product_id` int(11) UNSIGNED NOT NULL,
-  `qty` int(11) NOT NULL,
-  `price` decimal(25,2) NOT NULL,
+  `producto_id` int(11) UNSIGNED NOT NULL,
+  `cant` int(11) NOT NULL,
+  `precio` decimal(25,2) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 --
--- Estructura de tabla para la tabla `users`
+-- Estructura de tabla para la tabla `usuarios`
 --
 CREATE TABLE `Direccion`(
 `id_direccion` int(11) UNSIGNED NOT NULL,
@@ -110,47 +110,47 @@ CREATE TABLE `Direccion`(
 --
 -- ------------------------------------------------------------
 --
--- Estructura de tabla para la tabla `users`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
-CREATE TABLE `users` (
+CREATE TABLE `usuarios` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(60) NOT NULL,
-  `username` varchar(50) NOT NULL,
+  `nombre_usuario` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `user_level` int(11) NOT NULL,
+  `nivel_usuario` int(11) NOT NULL,
   `image` varchar(255) DEFAULT 'no_image.jpg',
-  `status` int(1) NOT NULL,
-  `last_login` datetime DEFAULT NULL
+  `estado` int(1) NOT NULL,
+  `ultimo_acceso` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `users`
+-- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `users` (`id`, `name`, `username`, `password`, `user_level`, `image`, `status`, `last_login`) VALUES
-(1, 'Admin Users', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2017-06-16 07:11:11'),
+INSERT INTO `usuarios` (`id`, `name`, `nombre_usuario`, `password`, `nivel_usuario`, `image`, `estado`, `ultimo_acceso`) VALUES
+(1, 'Admin usuarios', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 1, 'pzg9wa7o1.jpg', 1, '2017-06-16 07:11:11'),
 (2, 'Special User', 'special', 'ba36b97a41e7faf742ab09bf88405ac04f99599a', 2, 'no_image.jpg', 1, '2017-06-16 07:11:26'),
 (3, 'Default User', 'user', '12dea96fec20593566ab75692c9949596833adc9', 3, 'no_image.jpg', 1, '2017-06-16 07:11:03');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `user_groups`
+-- Estructura de tabla para la tabla `grupo_usuario`
 --
 
-CREATE TABLE `user_groups` (
+CREATE TABLE `grupo_usuario` (
   `id` int(11) NOT NULL,
-  `group_name` varchar(150) NOT NULL,
-  `group_level` int(11) NOT NULL,
-  `group_status` int(1) NOT NULL
+  `nombre_grupo` varchar(150) NOT NULL,
+  `nivel_grupo` int(11) NOT NULL,
+  `estado_grupo` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `user_groups`
+-- Volcado de datos para la tabla `grupo_usuario`
 --
 
-INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VALUES
+INSERT INTO `grupo_usuario` (`id`, `nombre_grupo`, `nivel_grupo`, `estado_grupo`) VALUES
 (1, 'Admin', 1, 1),
 (2, 'Special', 2, 0),
 (3, 'User', 3, 1);
@@ -160,9 +160,9 @@ INSERT INTO `user_groups` (`id`, `group_name`, `group_level`, `group_status`) VA
 --
 
 --
--- Indices de la tabla `categories`
+-- Indices de la tabla `categorias`
 --
-ALTER TABLE `categories`
+ALTER TABLE `categorias`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`);
 
@@ -174,39 +174,38 @@ ALTER TABLE `media`
   ADD KEY `id` (`id`);
 
 --
--- Indices de la tabla `products`
+-- Indices de la tabla `productos`
 --
-ALTER TABLE `products`
+ALTER TABLE `productos`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `name` (`name`),
-  ADD KEY `categorie_id` (`categorie_id`),
+  ADD KEY `categoria_id` (`categoria_id`),
   ADD KEY `media_id` (`media_id`);
 
 --
--- Indices de la tabla `sales`
+-- Indices de la tabla `ventas`
 --
-ALTER TABLE `sales`
+ALTER TABLE `ventas`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `product_id` (`product_id`);
+  ADD KEY `producto_id` (`producto_id`);
 
 --
--- Indices de la tabla `users`
+-- Indices de la tabla `usuarios`
 --
-ALTER TABLE `users`
+ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD KEY `user_level` (`user_level`),
-  ADD KEY `id_direccion` (`id_direccion`);
+  ADD UNIQUE KEY `nombre_usuario` (`nombre_usuario`),
+  ADD KEY `nivel_usuario` (`nivel_usuario`);
   
 --
--- Indices de la tabla `user_groups`
+-- Indices de la tabla `grupo_usuario`
 --
-ALTER TABLE `user_groups`
+ALTER TABLE `grupo_usuario`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `group_level` (`group_level`);
+  ADD UNIQUE KEY `nivel_grupo` (`nivel_grupo`);
 
 --
--- Indices de la tabla `user_groups`
+-- Indices de la tabla `grupo_usuario`
 --
 ALTER TABLE `Direccion`
 	ADD PRIMARY KEY (`id_direccion`);
@@ -216,9 +215,9 @@ ALTER TABLE `Direccion`
 --
 
 --
--- AUTO_INCREMENT de la tabla `categories`
+-- AUTO_INCREMENT de la tabla `categorias`
 --
-ALTER TABLE `categories`
+ALTER TABLE `categorias`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `media`
@@ -226,24 +225,24 @@ ALTER TABLE `categories`
 ALTER TABLE `media`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `products`
+-- AUTO_INCREMENT de la tabla `productos`
 --
-ALTER TABLE `products`
+ALTER TABLE `productos`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT de la tabla `sales`
+-- AUTO_INCREMENT de la tabla `ventas`
 --
-ALTER TABLE `sales`
+ALTER TABLE `ventas`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `users`
+-- AUTO_INCREMENT de la tabla `usuarios`
 --
-ALTER TABLE `users`
+ALTER TABLE `usuarios`
   MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 --
--- AUTO_INCREMENT de la tabla `user_groups`
+-- AUTO_INCREMENT de la tabla `grupo_usuario`
 --
-ALTER TABLE `user_groups`
+ALTER TABLE `grupo_usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT de la tabla `Direccion`
@@ -257,29 +256,28 @@ ALTER TABLE `user_groups`
 --
 
 --
--- Filtros para la tabla `products`
+-- Filtros para la tabla `productos`
 --
-ALTER TABLE `products`
-  ADD CONSTRAINT `FK_products` FOREIGN KEY (`categorie_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `productos`
+  ADD CONSTRAINT `FK_productos` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Filtros para la tabla `sales`
+-- Filtros para la tabla `ventas`
 --
-ALTER TABLE `sales`
-  ADD CONSTRAINT `SK` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `ventas`
+  ADD CONSTRAINT `SK` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `Direccion`
 --
 
-ALTER TABLE `users`
-  ADD CONSTRAINT `fk_direccion` FOREIGN KEY (`id_direccion`) REFERENCES `Direccion` (`id_direccion`) ON DELETE CASCADE ON UPDATE CASCADE;
+
 
 --
--- Filtros para la tabla `users`
+-- Filtros para la tabla `usuarios`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `FK_user` FOREIGN KEY (`user_level`) REFERENCES `user_groups` (`group_level`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `usuarios`
+  ADD CONSTRAINT `FK_user` FOREIGN KEY (`nivel_usuario`) REFERENCES `grupo_usuario` (`nivel_grupo`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

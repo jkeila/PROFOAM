@@ -5,8 +5,8 @@
    page_require_level(1);
 ?>
 <?php
-  $e_user = find_by_id('users',(int)$_GET['id']);
-  $groups  = find_all('user_groups');
+  $e_user = find_by_id('usuarios',(int)$_GET['id']);
+  $groups  = find_all('grupo_usuario');
   if(!$e_user){
     $session->msg("d","Missing user id.");
     redirect('usuarios.php');
@@ -16,15 +16,15 @@
 <?php
 //Update User basic info
   if(isset($_POST['update'])) {
-    $req_fields = array('name','username','level');
+    $req_fields = array('name','nombre_usuario','level');
     validate_fields($req_fields);
     if(empty($errors)){
              $id = (int)$e_user['id'];
            $name = remove_junk($db->escape($_POST['name']));
-       $username = remove_junk($db->escape($_POST['username']));
+       $nombre_usuario = remove_junk($db->escape($_POST['nombre_usuario']));
           $level = (int)$db->escape($_POST['level']);
-       $status   = remove_junk($db->escape($_POST['status']));
-            $sql = "UPDATE users SET name ='{$name}', username ='{$username}',user_level='{$level}',status='{$status}' WHERE id='{$db->escape($id)}'";
+       $estado   = remove_junk($db->escape($_POST['estado']));
+            $sql = "UPDATE usuarios SET name ='{$name}', nombre_usuario ='{$nombre_usuario}',nivel_usuario='{$level}',estado='{$estado}' WHERE id='{$db->escape($id)}'";
          $result = $db->query($sql);
           if($result && $db->affected_rows() === 1){
             $session->msg('s',"Acount Updated ");
@@ -48,7 +48,7 @@ if(isset($_POST['update-pass'])) {
            $id = (int)$e_user['id'];
      $password = remove_junk($db->escape($_POST['password']));
      $h_pass   = sha1($password);
-          $sql = "UPDATE users SET password='{$h_pass}' WHERE id='{$db->escape($id)}'";
+          $sql = "UPDATE usuarios SET password='{$h_pass}' WHERE id='{$db->escape($id)}'";
        $result = $db->query($sql);
         if($result && $db->affected_rows() === 1){
           $session->msg('s',"Se ha actualizado la contraseña del usuario. ");
@@ -82,22 +82,22 @@ if(isset($_POST['update-pass'])) {
                   <input type="name" class="form-control" name="name" value="<?php echo remove_junk(ucwords($e_user['name'])); ?>">
             </div>
             <div class="form-group">
-                  <label for="username" class="control-label">Usuario</label>
-                  <input type="text" class="form-control" name="username" value="<?php echo remove_junk(ucwords($e_user['username'])); ?>">
+                  <label for="nombre_usuario" class="control-label">Usuario</label>
+                  <input type="text" class="form-control" name="nombre_usuario" value="<?php echo remove_junk(ucwords($e_user['nombre_usuario'])); ?>">
             </div>
             <div class="form-group">
               <label for="level">Rol de usuario</label>
                 <select class="form-control" name="level">
                   <?php foreach ($groups as $group ):?>
-                   <option <?php if($group['group_level'] === $e_user['user_level']) echo 'selected="selected"';?> value="<?php echo $group['group_level'];?>"><?php echo ucwords($group['group_name']);?></option>
+                   <option <?php if($group['nivel_grupo'] === $e_user['nivel_usuario']) echo 'selected="selected"';?> value="<?php echo $group['nivel_grupo'];?>"><?php echo ucwords($group['nombre_grupo']);?></option>
                 <?php endforeach;?>
                 </select>
             </div>
             <div class="form-group">
-              <label for="status">Estado</label>
-                <select class="form-control" name="status">
-                  <option <?php if($e_user['status'] === '1') echo 'selected="selected"';?>value="1">Activo</option>
-                  <option <?php if($e_user['status'] === '0') echo 'selected="selected"';?> value="0">Inactivo</option>
+              <label for="estado">Estado</label>
+                <select class="form-control" name="estado">
+                  <option <?php if($e_user['estado'] === '1') echo 'selected="selected"';?>value="1">Activo</option>
+                  <option <?php if($e_user['estado'] === '0') echo 'selected="selected"';?> value="0">Inactivo</option>
                 </select>
             </div>
             <div class="form-group clearfix">

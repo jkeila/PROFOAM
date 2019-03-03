@@ -2,24 +2,24 @@
   $page_title = 'Agregar usuarios';
   require_once('includes/cargar.php');
     page_require_level(1);
-  $groups = find_all('user_groups');
+  $groups = find_all('grupo_usuario');
 ?>
 <?php
   if(isset($_POST['add_user'])){
 
-   $req_fields = array('full-name','username','password','level' );
+   $req_fields = array('full-name','nombre_usuario','password','level' );
    validate_fields($req_fields);
 
    if(empty($errors)){
            $name   = remove_junk($db->escape($_POST['full-name']));
-       $username   = remove_junk($db->escape($_POST['username']));
+       $nombre_usuario   = remove_junk($db->escape($_POST['nombre_usuario']));
        $password   = remove_junk($db->escape($_POST['password']));
-       $user_level = (int)$db->escape($_POST['level']);
+       $nivel_usuario = (int)$db->escape($_POST['level']);
        $password = sha1($password);
-        $query = "INSERT INTO users (";
-        $query .="name,username,password,user_level,status";
+        $query = "INSERT INTO usuarios (";
+        $query .="name,nombre_usuario,password,nivel_usuario,estado";
         $query .=") VALUES (";
-        $query .=" '{$name}', '{$username}', '{$password}', '{$user_level}','1'";
+        $query .=" '{$name}', '{$nombre_usuario}', '{$password}', '{$nivel_usuario}','1'";
         $query .=")";
         if($db->query($query)){
           //sucess
@@ -48,14 +48,14 @@
       </div>
       <div class="panel-body">
         <div class="col-md-6">
-          <form method="post" action="add_user.php">
+          <form method="post" action="agregar_usuario.php">
             <div class="form-group">
                 <label for="name">Nombre</label>
                 <input type="text" class="form-control" name="full-name" placeholder="Nombre completo">
             </div>
             <div class="form-group">
-                <label for="username">Usuario</label>
-                <input type="text" class="form-control" name="username" placeholder="Nombre de usuario">
+                <label for="nombre_usuario">Usuario</label>
+                <input type="text" class="form-control" name="nombre_usuario" placeholder="Nombre de usuario">
             </div>
             <div class="form-group">
                 <label for="password">Contraseña</label>
@@ -65,7 +65,7 @@
               <label for="level">Rol de usuario</label>
                 <select class="form-control" name="level">
                   <?php foreach ($groups as $group ):?>
-                   <option value="<?php echo $group['group_level'];?>"><?php echo ucwords($group['group_name']);?></option>
+                   <option value="<?php echo $group['nivel_grupo'];?>"><?php echo ucwords($group['nombre_grupo']);?></option>
                 <?php endforeach;?>
                 </select>
             </div>
@@ -80,15 +80,15 @@
     </div>
   </div>
 <?php
-  if($_SERVER['add_user']=='POST')
+  if(isset($_SERVER['add_user']))
   {
-      function validar_nombre(string $full-name): bool 
+      function validar_nombre(string $fullname): bool 
       {
           return !(trim($full-name)=='');
       }
-       function validar_nombreusuario(string $username): bool 
+       function validar_nombreusuario(string $nombre_usuario): bool 
       {
-          return !(trim($username)=='');
+          return !(trim($nombre_usuario)=='');
       }
        function validar_contrasena(string $password): bool 
       {

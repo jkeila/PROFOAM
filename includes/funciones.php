@@ -70,14 +70,14 @@ function redirect($url, $permanent = false)
     exit();
 }
 /*--------------------------------------------------------------*/
-/* Function for find out total saleing price, buying price and profit
+/* Function for find out total saleing precio, buying precio and profit
 /*--------------------------------------------------------------*/
-function total_price($totals){
+function total_precio($totals){
    $sum = 0;
    $sub = 0;
    foreach($totals as $total ){
-     $sum += $total['total_saleing_price'];
-     $sub += $total['total_buying_price'];
+     $sum += $total['total_saleing_precio'];
+     $sub += $total['total_buying_precio'];
      $profit = $sum - $sub;
    }
    return array($sum,$profit);

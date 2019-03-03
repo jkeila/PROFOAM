@@ -3,7 +3,7 @@
   require_once('includes/cargar.php');
   // Checkin What level user has permission to view this page
    page_require_level(1);
-  $all_groups = find_all('user_groups');
+  $all_groups = find_all('grupo_usuario');
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -36,12 +36,12 @@
         <?php foreach($all_groups as $a_group): ?>
           <tr>
            <td class="text-center"><?php echo count_id();?></td>
-           <td><?php echo remove_junk(ucwords($a_group['group_name']))?></td>
+           <td><?php echo remove_junk(ucwords($a_group['nombre_grupo']))?></td>
            <td class="text-center">
-             <?php echo remove_junk(ucwords($a_group['group_level']))?>
+             <?php echo remove_junk(ucwords($a_group['nivel_grupo']))?>
            </td>
            <td class="text-center">
-           <?php if($a_group['group_status'] === '1'): ?>
+           <?php if($a_group['estado_grupo'] === '1'): ?>
             <span class="label label-success"><?php echo "Activo"; ?></span>
           <?php else: ?>
             <span class="label label-danger"><?php echo "Inactivo"; ?></span>
@@ -49,10 +49,10 @@
            </td>
            <td class="text-center">
              <div class="btn-group">
-                <a href="edit_group.php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
+                <a href="editar_grupo.php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-xs btn-warning" data-toggle="tooltip" title="Editar">
                   <i class="glyphicon glyphicon-pencil"></i>
                </a>
-                <a href="eliminar_grupo.php".php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
+                <a href="eliminar_grupo.php?id=<?php echo (int)$a_group['id'];?>" class="btn btn-xs btn-danger" data-toggle="tooltip" title="Eliminar">
                   <i class="glyphicon glyphicon-remove"></i>
                 </a>
                 </div>

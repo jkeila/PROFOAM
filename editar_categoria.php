@@ -6,7 +6,7 @@
 ?>
 <?php
   //Display all catgories.
-  $categorie = find_by_id('categories',(int)$_GET['id']);
+  $categorie = find_by_id('categorias',(int)$_GET['id']);
   if(!$categorie){
     $session->msg("d","Missing categorie id.");
     redirect('categoria.php');
@@ -19,7 +19,7 @@ if(isset($_POST['edit_cat'])){
   validate_fields($req_field);
   $cat_name = remove_junk($db->escape($_POST['categorie-name']));
   if(empty($errors)){
-        $sql = "UPDATE categories SET name='{$cat_name}'";
+        $sql = "UPDATE categorias SET name='{$cat_name}'";
        $sql .= " WHERE id='{$categorie['id']}'";
      $result = $db->query($sql);
      if($result && $db->affected_rows() === 1) {

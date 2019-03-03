@@ -5,7 +5,7 @@
    page_require_level(3);
 ?>
 <?php
-$sales = find_all_sale();
+$ventas = find_all_sale();
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -38,16 +38,16 @@ $sales = find_all_sale();
              </tr>
             </thead>
            <tbody>
-             <?php foreach ($sales as $sale):?>
+             <?php foreach ($ventas as $sale):?>
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
                <td><?php echo remove_junk($sale['name']); ?></td>
-               <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
-               <td class="text-center"><?php echo remove_junk($sale['price']); ?></td>
+               <td class="text-center"><?php echo (int)$sale['cant']; ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['precio']); ?></td>
                <td class="text-center"><?php echo $sale['date']; ?></td>
                <td class="text-center">
                   <div class="btn-group">
-                     <a href="agregar_venta.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
+                     <a href="editar_venta.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-warning btn-xs"  title="Edit" data-toggle="tooltip">
                        <span class="glyphicon glyphicon-edit"></span>
                      </a>
                      <a href="eliminar_venta.php?id=<?php echo (int)$sale['id'];?>" class="btn btn-danger btn-xs"  title="Delete" data-toggle="tooltip">

@@ -5,8 +5,8 @@
    page_require_level(2);
 ?>
 <?php
-$product = find_by_id('products',(int)$_GET['id']);
-$all_categories = find_all('categories');
+$product = find_by_id('productos',(int)$_GET['id']);
+$all_categorias = find_all('categorias');
 $all_photo = find_all('media');
 if(!$product){
   $session->msg("d","Missing product id.");
@@ -15,23 +15,23 @@ if(!$product){
 ?>
 <?php
  if(isset($_POST['product'])){
-    $req_fields = array('product-title','product-categorie','product-quantity','buying-price', 'saleing-price' );
+    $req_fields = array('product-title','product-categorie','product-cantidad','buying-precio', 'saleing-precio' );
     validate_fields($req_fields);
 
    if(empty($errors)){
        $p_name  = remove_junk($db->escape($_POST['product-title']));
        $p_cat   = (int)$_POST['product-categorie'];
-       $p_qty   = remove_junk($db->escape($_POST['product-quantity']));
-       $p_buy   = remove_junk($db->escape($_POST['buying-price']));
-       $p_sale  = remove_junk($db->escape($_POST['saleing-price']));
+       $p_cant   = remove_junk($db->escape($_POST['product-cantidad']));
+       $p_buy   = remove_junk($db->escape($_POST['buying-precio']));
+       $p_sale  = remove_junk($db->escape($_POST['saleing-precio']));
        if (is_null($_POST['product-photo']) || $_POST['product-photo'] === "") {
          $media_id = '0';
        } else {
          $media_id = remove_junk($db->escape($_POST['product-photo']));
        }
-       $query   = "UPDATE products SET";
-       $query  .=" name ='{$p_name}', quantity ='{$p_qty}',";
-       $query  .=" buy_price ='{$p_buy}', sale_price ='{$p_sale}', categorie_id ='{$p_cat}',media_id='{$media_id}'";
+       $query   = "UPDATE productos SET";
+       $query  .=" name ='{$p_name}', cantidad ='{$p_cant}',";
+       $query  .=" precio_compra ='{$p_buy}', precio_venta ='{$p_sale}', categoria_id ='{$p_cat}',media_id='{$media_id}'";
        $query  .=" WHERE id ='{$product['id']}'";
        $result = $db->query($query);
                if($result && $db->affected_rows() === 1){
@@ -80,8 +80,8 @@ if(!$product){
                   <div class="col-md-6">
                     <select class="form-control" name="product-categorie">
                     <option value="">Selecciona una categoría</option>
-                   <?php  foreach ($all_categories as $cat): ?>
-                     <option value="<?php echo (int)$cat['id']; ?>" <?php if($product['categorie_id'] === $cat['id']): echo "selected"; endif; ?> >
+                   <?php  foreach ($all_categorias as $cat): ?>
+                     <option value="<?php echo (int)$cat['id']; ?>" <?php if($product['categoria_id'] === $cat['id']): echo "selected"; endif; ?> >
                        <?php echo remove_junk($cat['name']); ?></option>
                    <?php endforeach; ?>
                  </select>
@@ -102,35 +102,35 @@ if(!$product){
                <div class="row">
                  <div class="col-md-4">
                   <div class="form-group">
-                    <label for="qty">Cantidad</label>
+                    <label for="cant">Cantidad</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                        <i class="glyphicon glyphicon-shopping-cart"></i>
                       </span>
-                      <input type="number" class="form-control" name="product-quantity" value="<?php echo remove_junk($product['quantity']); ?>">
+                      <input type="number" class="form-control" name="product-cantidad" value="<?php echo remove_junk($product['cantidad']); ?>">
                    </div>
                   </div>
                  </div>
                  <div class="col-md-4">
                   <div class="form-group">
-                    <label for="qty">Precio de compra</label>
+                    <label for="cant">Precio de compra</label>
                     <div class="input-group">
                       <span class="input-group-addon">
                         <i class="glyphicon glyphicon-usd"></i>
                       </span>
-                      <input type="number" class="form-control" name="buying-price" value="<?php echo remove_junk($product['buy_price']);?>">
+                      <input type="number" class="form-control" name="buying-precio" value="<?php echo remove_junk($product['precio_compra']);?>">
                       <span class="input-group-addon">.00</span>
                    </div>
                   </div>
                  </div>
                   <div class="col-md-4">
                    <div class="form-group">
-                     <label for="qty">Precio de venta</label>
+                     <label for="cant">Precio de venta</label>
                      <div class="input-group">
                        <span class="input-group-addon">
                          <i class="glyphicon glyphicon-usd"></i>
                        </span>
-                       <input type="number" class="form-control" name="saleing-price" value="<?php echo remove_junk($product['sale_price']);?>">
+                       <input type="number" class="form-control" name="saleing-precio" value="<?php echo remove_junk($product['precio_venta']);?>">
                        <span class="input-group-addon">.00</span>
                     </div>
                    </div>

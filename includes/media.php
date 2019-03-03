@@ -154,7 +154,7 @@ class  Media {
  /*--------------------------------------------------------------*/
   private function update_userImg($id){
      global $db;
-      $sql = "UPDATE users SET";
+      $sql = "UPDATE usuarios SET";
       $sql .=" image='{$db->escape($this->fileName)}'";
       $sql .=" WHERE id='{$db->escape($id)}'";
       $result = $db->query($sql);
@@ -165,7 +165,7 @@ class  Media {
  /* Function for Delete old image
  /*--------------------------------------------------------------*/
   public function user_image_destroy($id){
-     $image = find_by_id('users',$id);
+     $image = find_by_id('usuarios',$id);
      if($image['image'] === 'no_image.jpg')
      {
        return true;

@@ -6,7 +6,7 @@
 ?>
 <?php
  $year = date('Y');
- $sales = monthlySales($year);
+ $ventas = monthlyventas($year);
 ?>
 <?php include_once('layouts/header.php'); ?>
 <div class="row">
@@ -35,12 +35,12 @@
              </tr>
             </thead>
            <tbody>
-             <?php foreach ($sales as $sale):?>
+             <?php foreach ($ventas as $sale):?>
              <tr>
                <td class="text-center"><?php echo count_id();?></td>
                <td><?php echo remove_junk($sale['name']); ?></td>
-               <td class="text-center"><?php echo (int)$sale['qty']; ?></td>
-               <td class="text-center"><?php echo remove_junk($sale['total_saleing_price']); ?></td>
+               <td class="text-center"><?php echo (int)$sale['cant']; ?></td>
+               <td class="text-center"><?php echo remove_junk($sale['total_saleing_precio']); ?></td>
                <td class="text-center"><?php echo date("d/m/Y", strtotime ($sale['date'])); ?></td>
              </tr>
              <?php endforeach;?>

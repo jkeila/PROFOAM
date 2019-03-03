@@ -17,9 +17,13 @@
   <body>
   <?php  if ($session->isUserLoggedIn(true)): ?>
     <header id="header">
-      <div class="logo pull-left"> OSWA - Inventory </div>
+      <div class="logo pull-left"> OSWA - Inventory 
+      <a hrfe="home.php "><img clas="img-responsive" src="img/logo2.jpg" class="img-circle img-inline" with="60px" height="60x"></a>
+      </div>
+
       <div class="header-content">
       <div class="header-date pull-left">
+        
         <strong><?php echo date("d/m/Y  g:i a");?></strong>
       </div>
       <div class="pull-right clearfix">
@@ -55,15 +59,15 @@
      </div>
     </header>
     <div class="sidebar">
-      <?php if($user['user_level'] === '1'): ?>
+      <?php if($user['nivel_usuario'] === '1'): ?>
         <!-- admin menu -->
       <?php include_once('admin_menu.php');?>
 
-      <?php elseif($user['user_level'] === '2'): ?>
+      <?php elseif($user['nivel_usuario'] === '2'): ?>
         <!-- Special user -->
       <?php include_once('special_menu.php');?>
 
-      <?php elseif($user['user_level'] === '3'): ?>
+      <?php elseif($user['nivel_usuario'] === '3'): ?>
         <!-- User menu -->
       <?php include_once('user_menu.php');?>
 

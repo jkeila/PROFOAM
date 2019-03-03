@@ -12,8 +12,8 @@
      <?php echo display_msg($msg); ?>
       <form method="post" action="auth_v2.php" class="clearfix">
         <div class="form-group">
-              <label for="username" class="control-label">Username</label>
-              <input type="name" class="form-control" name="username" placeholder="Username">
+              <label for="nombre_usuario" class="control-label">nombre_usuario</label>
+              <input type="name" class="form-control" name="nombre_usuario" placeholder="nombre_usuario">
         </div>
         <div class="form-group">
             <label for="Password" class="control-label">Password</label>

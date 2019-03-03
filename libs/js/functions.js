@@ -68,9 +68,9 @@ function suggetion() {
   });
   function total(){
     $('#product_info input').change(function(e)  {
-            var price = +$('input[name=price]').val() || 0;
-            var qty   = +$('input[name=quantity]').val() || 0;
-            var total = qty * price ;
+            var precio = +$('input[name=precio]').val() || 0;
+            var cant   = +$('input[name=cantidad]').val() || 0;
+            var total = cant * precio ;
                 $('input[name=total]').val(total.toFixed(2));
     });
   }

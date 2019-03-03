@@ -3,7 +3,7 @@
   require_once('includes/cargar.php');
   // Checkin What level user has permission to view this page
    page_require_level(2);
-  $products = join_product_table();
+  $productos = join_product_table();
 ?>
 <?php include_once('layouts/header.php'); ?>
   <div class="row">
@@ -33,7 +33,7 @@
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($products as $product):?>
+              <?php foreach ($productos as $product):?>
               <tr>
                 <td class="text-center"><?php echo count_id();?></td>
                 <td>
@@ -45,16 +45,16 @@
                 </td>
                 <td> <?php echo remove_junk($product['name']); ?></td>
                 <td class="text-center"> <?php echo remove_junk($product['categorie']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['quantity']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['buy_price']); ?></td>
-                <td class="text-center"> <?php echo remove_junk($product['sale_price']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['cantidad']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['precio_compra']); ?></td>
+                <td class="text-center"> <?php echo remove_junk($product['precio_venta']); ?></td>
                 <td class="text-center"> <?php echo read_date($product['date']); ?></td>
                 <td class="text-center">
                   <div class="btn-group">
-                    <a href="edit_product.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
+                    <a href="editar_producto.php?id=<?php echo (int)$product['id'];?>" class="btn btn-info btn-xs"  title="Editar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-edit"></span>
                     </a>
-                     <a href="eliminar_producto.php".php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
+                     <a href="eliminar_producto.php?id=<?php echo (int)$product['id'];?>" class="btn btn-danger btn-xs"  title="Eliminar" data-toggle="tooltip">
                       <span class="glyphicon glyphicon-trash"></span>
                     </a>
                   </div>

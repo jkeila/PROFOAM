@@ -1,12 +1,12 @@
 <?php include_once('includes/cargar.php'); ?>
 <?php
-$req_fields = array('username','password' );
+$req_fields = array('nombre_usuario','password' );
 validate_fields($req_fields);
-$username = remove_junk($_POST['username']);
+$nombre_usuario = remove_junk($_POST['nombre_usuario']);
 $password = remove_junk($_POST['password']);
 
 if(empty($errors)){
-  $user_id = authenticate($username, $password);
+  $user_id = authenticate($nombre_usuario, $password);
   if($user_id){
     //create session with id
      $session->login($user_id);
