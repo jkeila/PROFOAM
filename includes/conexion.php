@@ -104,6 +104,16 @@ public function while_loop($loop){
  return $results;
 }
 
+//OTRAS FUNCIONES
+public function obtenerFila($resultado){
+      return mysqli_fetch_array($resultado);
+}
+
+public function ejecutarConsulta($sql){
+      return mysqli_query($this->con, $sql);
+}
+
+
 }
 
 $db = new MySqli_DB();
