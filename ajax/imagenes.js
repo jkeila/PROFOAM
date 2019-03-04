@@ -1,7 +1,6 @@
-//JELSYN 3-04-19 10pm 
 $(document).ready(function(){
   $.ajax({
-    url:"ajax/gestion-producto.php?accion=obtenerImgProducto",
+    url:"ajax/gestion-producto.php?accion=obtenerImg",
     data:"",
     method:"POST",
     success:function(respuesta){
@@ -12,4 +11,6 @@ $(document).ready(function(){
       alert("Error "+e);
     }
   });
+
+
 });

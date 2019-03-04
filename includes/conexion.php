@@ -113,6 +113,19 @@ public function ejecutarConsulta($sql){
       return mysqli_query($this->con, $sql);
 }
 
+public function cantidadRegistros($resultado){
+      return mysqli_num_rows($resultado);
+    }
+
+public function getLink(){
+      return $this->con;
+    }
+
+public function ultimoId(){
+      return mysqli_insert_id($this->con);
+    }
+
+
 
 }
 

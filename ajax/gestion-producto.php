@@ -1,13 +1,12 @@
 <?php
-   include ('../includes/conexion.php');
+//JELSYN 3-04-19 10pm
+   include ('../class/class-conexion.php');
+   include ('../class/class-productos.php');
    $conexion  = new Conexion();
    switch ($_GET["accion"]) {
-         case 'obtenerImg':
-         include("../class/class-img.php");
-         Products::obtenerImg($conexion);
-         break;
-         echo "Algo anda mal";
-         break;
+      case 'obtenerImgProducto':
+         Productos::obtenerProductos($conexion);   
+      break;
    	default:
    		# code...
    		break;
