@@ -79,7 +79,7 @@
 
 		public static function obtenerProductos($conexion){
 			$resultado = $conexion->ejecutarConsulta(
-				'SELECT a.id, a.name, a.precio_venta, a.url_img
+				'SELECT a.id, a.name, a.precio_venta, a.url_img, a.cantidad
 				FROM productos a 
 				INNER JOIN categorias b 
 				ON(a.categoria_id = b.categoria_id)'
@@ -89,9 +89,10 @@
 					echo '<div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">';
 					//echo "<img src =".$fila['url_img']." width='260' height='200'>";
 					echo '	<div class="well">';
-					echo '		<img src="'.$fila["url_img"].'"width="260" height="200" class="img-responsive" >';
-					echo '		<b>'.$fila["name"].'</b>';
-					echo '		<span class="label label-primary">'.$fila["precio_venta"].'</span> ';
+					echo '	<img src="'.$fila["url_img"].'"width="260" height="200" class="img-responsive" >';
+					echo '	Nombre: <b>'.$fila["name"].'</b> <br>';
+					echo '	Precio: Lps '.$fila["precio_venta"].'<br> ';
+					echo '	Cantidad Existente: '.$fila["cantidad"].'<br> ';
 					echo '<br><button type="button" style="font-size:24px" class="fa fa-trash-o" onclick="eliminarAplicacion('.$fila["id"].')"></button>';
 					echo '<button type="button" style="font-size:24px" class="fa fa-pencil" onclick="seleccionarAplicacion('.$fila["id"].')"</button>';
 					echo '	</div>';
