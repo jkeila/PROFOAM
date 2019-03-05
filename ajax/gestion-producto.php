@@ -7,8 +7,10 @@
       case 'obtenerImgProducto':
          Productos::obtenerProductos($conexion);   
       break;
+      /*case "obtenerProductos":
+         Productos::obtenerDetalleProductos($conexion,$_POST["id_producto"]);         
+      break;*/
    	default:
-   		# code...
    		break;
    }
    
